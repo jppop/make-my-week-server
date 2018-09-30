@@ -1,0 +1,39 @@
+{
+  "name": "graphql-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "flow": "flow",
+    "start": "nodemon --exec npx babel-node src/index.js ; exit 0",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf dist",
+    "build": "npm run clean && babel src -d dist",
+    "serve": "node dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-express": "^2.1.0",
+    "app-root-path": "^2.1.0",
+    "express": "^4.16.3",
+    "graphql": "^14.0.2",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
+    "morgan": "^1.9.1",
+    "split": "^1.0.1",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "casual": "^1.5.19",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "nodemon": "^1.18.4",
+    "rimraf": "^2.6.2"
+  }
+}
