@@ -41,7 +41,12 @@ const options = {
     handleExceptions: true,
     json: false,
     colorize: true,
-    format: winston.format.combine(winston.format.colorize(), winston.format.timestamp(), myFormat),
+    format: winston.format.combine(
+      winston.format.splat(),
+      winston.format.colorize(),
+      winston.format.timestamp(),
+      myFormat,
+    ),
   },
 };
 

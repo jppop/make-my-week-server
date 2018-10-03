@@ -30,11 +30,20 @@ const customScalars = {
 const typeDefs = gql`
   # Comments in GraphQL are defined with the hash (#) symbol.
 
+  scalar Date
+
+  type User {
+    id: ID!
+    username: String!
+    fullName: String!
+    email: String!
+  }
+
   # This "Project" type can be used in other type declarations.
   type Project {
     id: ID!
-    name: String
-    label: String
+    name: String!
+    label: String!
     tasks: [Task]!
   }
 
@@ -44,11 +53,10 @@ const typeDefs = gql`
     label: String
     color: String
     project: Project
+    owner: User!
     planned: Float
     completed: Float
   }
-
-  scalar Date
 
   type Work {
     id: ID!
@@ -64,10 +72,13 @@ const typeDefs = gql`
   # (A "Mutation" type will be covered later on.)
   type Query {
     projects: [Project]!
-    project(id: ID!): Project
+    project(id: ID!): Project!
     projectByName(name: String!): Project
-    tasks: [Task]
-    task(id: ID!): Task
+    tasks: [Task]!
+    task(id: ID!): Task!
+    works: [Work]!
+    work(id: ID!): Work!
+    users: [User]!
   }
 
   type Mutation {
@@ -84,12 +95,20 @@ const resolvers = merge(customScalars, {
     projectByName: (parent, { name }) => data.projects.find(p => p.name === name),
     tasks: () => Object.values(data.tasks),
     task: (parent, { id }) => data.tasks.find(t => t.id === id),
+    works: () => Object.values(data.works),
+    work: (parent, { id }) => data.works.find(w => w.id === id),
+    users: () => Object.values(data.users),
   },
   Project: {
     tasks: project => Object.values(data.tasks.filter(t => t.projectId === project.id)),
   },
   Task: {
     project: task => data.projects.find(p => p.id === task.projectId),
+    owner: task => data.users.find(u => u.id === task.ownerId),
+  },
+  Work: {
+    project: work => data.projects.find(p => p.id === work.projectId),
+    task: work => data.tasks.find(t => t.id === work.taskId),
   },
   Mutation: {
     createProject: () => createProject(),
