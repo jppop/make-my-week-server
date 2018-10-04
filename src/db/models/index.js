@@ -2,7 +2,7 @@ import Sequelize from 'sequelize';
 import path from 'path';
 import fs from 'fs';
 import appRoot from 'app-root-path';
-import { logger } from '../config/logger';
+import { logger } from '../../config/logger';
 
 const dataRoot = path.join(appRoot.toString(), 'data');
 if (!fs.existsSync(dataRoot)) {
@@ -30,33 +30,19 @@ Object.keys(models).forEach((key) => {
 
 export { sequelize };
 
-// sequelize
-//   .sync()
-//   .then(() => {
-//     const project = models.Project.build({ id: 1 });
-//     const task = models.Task.build({ id: 2 });
-//     project.addTask(task);
-//     project.save().then(() => {
-//       logger.debug('saved project: %j', project);
-//       models.Project.findAll({ include: [{ model: models.Task }] }).then(p => logger.debug('projects: %j', p));
-//     });
-//   })
-//   .catch(e => logger.error('error: %j', e));
-
-let seq = 0;
-const nextSeq = () => ++seq;
-
 // without transaction
 // sequelize
 //   .sync({ force: true })
-//   .then(() => Promise.all([models.Project.create({ id: nextSeq() }), models.Task.create({ id: nextSeq() })]))
+//   .then(() => Promise.all([models.Project.create({ id: nextSeq() }),
+//         models.Task.create({ id: nextSeq() })]))
 //   .spread((project, task) => task.setProject(project))
 //   .then(() => models.Project.findAll({ include: [{ model: models.Task }] }))
 //   .then(p => logger.debug('projects: %j', p));
 
 // sequelize
 //   .sync({ force: true })
-//   .then(() => Promise.all([models.Project.build({ id: nextSeq() }), models.Task.build({ id: nextSeq() })]))
+//   .then(() => Promise.all([models.Project.build({ id: nextSeq() }),
+//        models.Task.build({ id: nextSeq() })]))
 //   .spread((project, task) => {
 //     task.setProject(project, { save: false });
 //     return sequelize.transaction((tx) => {
@@ -68,17 +54,17 @@ const nextSeq = () => ++seq;
 //   .then(() => models.Project.findAll({ include: [{ model: models.Task }] }))
 //   .then(p => logger.debug('projects: %j', p));
 
-sequelize
-  .sync({ force: true })
-  .then(() => models.Project.create({ id: nextSeq() }))
-  .then(project => sequelize.transaction(tx => Promise.all([
-    models.Task.create({ id: nextSeq(), projectId: project.id }, { transaction: tx }),
-    models.Task.create({ id: nextSeq(), projectId: project.id }, { transaction: tx }),
-    models.Task.create({ id: nextSeq(), projectId: project.id }, { transaction: tx }),
-  ])))
-  .then(() => models.Project.findAll({ include: [{ model: models.Task }] }))
-  .then(p => logger.debug('projects: %j', p))
-  .catch(e => logger.error('Error: %j', e));
+// sequelize
+//   .sync({ force: true })
+//   .then(() => models.Project.create({ id: nextSeq() }))
+//   .then(project => sequelize.transaction(tx => Promise.all([
+//     models.Task.create({ id: nextSeq(), projectId: project.id }, { transaction: tx }),
+//     models.Task.create({ id: nextSeq(), projectId: project.id }, { transaction: tx }),
+//     models.Task.create({ id: nextSeq(), projectId: project.id }, { transaction: tx }),
+//   ])))
+//   .then(() => models.Project.findAll({ include: [{ model: models.Task }] }))
+//   .then(p => logger.debug('projects: %j', p))
+//   .catch(e => logger.error('Error: %j', e));
 
 //   .then(() => sequelize.transaction((tx) => {
 //     const project = models.Project.create({ id: 1 }, { transaction: tx });

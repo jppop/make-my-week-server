@@ -22,7 +22,9 @@
     "moment": "^2.22.2",
     "morgan": "^1.9.1",
     "sequelize": "^4.39.0",
+    "sequelize-cli": "^4.1.1",
     "split": "^1.0.1",
+    "uuid": "^3.3.2",
     "winston": "^3.1.0"
   },
   "devDependencies": {
@@ -30,6 +32,8 @@
     "@babel/core": "^7.1.2",
     "@babel/node": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "babel-plugin-add-module-exports": "^1.0.0",
     "casual": "^1.5.19",
     "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
