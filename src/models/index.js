@@ -2,7 +2,7 @@ import Sequelize from 'sequelize';
 import path from 'path';
 import fs from 'fs';
 import appRoot from 'app-root-path';
-import { logger } from '../../config/logger';
+import { logger } from '../config/logger';
 
 const dataRoot = path.join(appRoot.toString(), 'data');
 if (!fs.existsSync(dataRoot)) {
@@ -20,6 +20,8 @@ const sequelize = new Sequelize('mmw', null, null, {
 const models = {
   Project: sequelize.import('./project'),
   Task: sequelize.import('./task'),
+  Work: sequelize.import('./work'),
+  User: sequelize.import('./user'),
 };
 
 Object.keys(models).forEach((key) => {

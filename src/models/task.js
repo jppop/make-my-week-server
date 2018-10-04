@@ -1,5 +1,5 @@
 const task = (sequelize, DataTypes) => {
-  const Task = DataTypes.define('task', {
+  const Task = sequelize.define('task', {
     id: {
       allowNull: false,
       primaryKey: true,
@@ -35,7 +35,7 @@ const task = (sequelize, DataTypes) => {
   });
 
   Task.associate = (models) => {
-    Task.belongsTo(models.Project, { foreignKey: 'fk_project', targetKey: 'projectId' });
+    Task.belongsTo(models.Project, { foreignKey: 'projectId', targetKey: 'id' });
   };
 
   return Task;

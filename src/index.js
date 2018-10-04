@@ -2,6 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import dataServer from './data-server';
 import { logger, accessLogger, ACCESS_FORMAT } from './config/logger';
+import models, { sequelize } from './models';
+import createDemoData from './demo-seeder';
 
 const { PORT = 9000 } = process.env;
 
@@ -35,6 +37,10 @@ app.use((err, req, res, next) => {
   //   res.render('error');
 });
 
-app.listen(PORT, () => {
-  logger.info(`🚀  Server ready at http://localhost:${PORT}${dataServer.graphqlPath}`); // eslint-disable-line no-console
+sequelize.sync({ force: true }).then(async () => {
+  createDemoData(models).then(async () => {
+    app.listen(PORT, () => {
+      logger.info(`🚀  Server ready at http://localhost:${PORT}${dataServer.graphqlPath}`); // eslint-disable-line no-console
+    });
+  });
 });

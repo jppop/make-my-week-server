@@ -1,5 +1,5 @@
 const work = (sequelize, DataTypes) => {
-  const Work = DataTypes.define('work', {
+  const Work = sequelize.define('work', {
     id: {
       allowNull: false,
       primaryKey: true,
@@ -46,9 +46,9 @@ const work = (sequelize, DataTypes) => {
   });
 
   Work.associate = (models) => {
-    Work.belongsTo(models.Project, { foreignKey: 'fk_project', targetKey: 'projectId' });
-    Work.belongsTo(models.Task, { foreignKey: 'fk_task', targetKey: 'taskId' });
-    Work.belongsTo(models.user, { foreignKey: 'fk_owner', targetKey: 'ownerId' });
+    Work.belongsTo(models.Project, { foreignKey: 'projectId', targetKey: 'id' });
+    Work.belongsTo(models.Task, { foreignKey: 'taskId', targetKey: 'id' });
+    Work.belongsTo(models.User, { foreignKey: 'ownerId', targetKey: 'id' });
   };
 
   return Work;

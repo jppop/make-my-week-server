@@ -28,7 +28,7 @@ const user = (sequelize, DataTypes) => {
   });
 
   User.associate = (models) => {
-    User.belongsTo(models.Work);
+    User.hasMany(models.Work);
   };
 
   return User;
